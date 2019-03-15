@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import winston from "winston";
+
+dotenv.config();
+
+const port = process.env.SERVER_PORT;
 const app = express();
-const port = 8080;
 
 app.set("views", path.join(__dirname, "views"));
 app.set( "view engine", "ejs" );
