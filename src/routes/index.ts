@@ -1,5 +1,6 @@
 import * as express from "express";
 import {Application} from "express";
+import * as api from "./api";
 
 export const register = (app: Application) => {
     const oidc = app.locals.oidc;
@@ -20,7 +21,8 @@ export const register = (app: Application) => {
 
     app.get("/guests", oidc.ensureAuthenticated(), (req: any, res: express.Response) => {
         const user = req.userContext ? req.userContext.userInfo : null;
-
         res.render("guest/guests", {isAuthenticated: req.isAuthenticated(), user });
     });
+
+    api.register(app);
 };
