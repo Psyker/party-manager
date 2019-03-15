@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import path from "path";
 import winston from "winston";
+import * as sessionAuth from "./middleware/sessionAuth";
+import * as routes from "./routes";
 
 dotenv.config();
 
@@ -11,9 +13,8 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set( "view engine", "ejs" );
 
-app.get("/", (req: express.Request, res: express.Response) => {
-    res.render("index");
-});
+sessionAuth.register(app);
+routes.register(app);
 
 app.listen(port, () => {
     winston.log("info", `Server started at http://localhost:${port}`);
