@@ -17,7 +17,7 @@ export const register = (app: Application) => {
     app.use(session({
         resave: true,
         saveUninitialized: false,
-        secret: process.env.SESSION_SECRET
+        secret: process.env.SESSION_SECRET || "myVerySecrectCookie"
     }));
 
     // Configure Express to use the OIDC client router

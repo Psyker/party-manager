@@ -6,7 +6,7 @@ export const register = (app: Application) => {
     const oidc = app.locals.oidc;
 
     app.get("/", (req: any, res: express.Response) => {
-        const user = req.userContext ? req.userContext.userInfo : null;
+        const user = req.userContext ? req.userContext.userinfo : null;
         res.render("index", {isAuthenticated: req.isAuthenticated(), user });
     });
 
@@ -20,7 +20,7 @@ export const register = (app: Application) => {
     });
 
     app.get("/guests", oidc.ensureAuthenticated(), (req: any, res: express.Response) => {
-        const user = req.userContext ? req.userContext.userInfo : null;
+        const user = req.userContext ? req.userContext.userinfo : null;
         res.render("guest/guests", {isAuthenticated: req.isAuthenticated(), user });
     });
 

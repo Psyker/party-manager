@@ -17,7 +17,7 @@ export const register = (app: express.Application) => {
 
     app.get("/api/guests/all", oidc.ensureAuthenticated() , async (req: any, res) => {
         try {
-            const userId: string = req.userContect.userInfo.sub;
+            const userId: string = req.userContext.userinfo.sub;
             const guests: object = await db.any(`
                 SELECT
                     id
@@ -37,7 +37,7 @@ export const register = (app: express.Application) => {
 
     app.get("/api/guests/total", oidc.ensureAuthenticated(), async (req: any, res) => {
         try {
-            const userId: string = req.userContext.userInfo.sub;
+            const userId: string = req.userContext.userinfo.sub;
             const total: object = await db.one(`
                 SELECT COUNT(*) AS total
                 FROM guests
@@ -55,7 +55,7 @@ export const register = (app: express.Application) => {
 
     app.get("/api/guests/find/:search", oidc.ensureAuthenticated(), async (req: any, res) => {
         try {
-            const userId: string = req.userContext.userInfo.sub;
+            const userId: string = req.userContext.userinfo.sub;
             const guests = await db.any(`
                 SELECT
                     id

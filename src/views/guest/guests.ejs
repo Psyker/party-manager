@@ -3,15 +3,79 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Guitar Inventory</title>
+        <title>GuestHub - Guests List</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
+        <% include ../partials/nav.ejs %>
         <div class="container">
-            <h1 class="header">Guests List</h1>
-            <p>Your future list of guests!</p>
+            <div id="app">
+                <div class="row" id="guestsList">
+                    <h3>Guests list</h3>
+                    <table v-if="hasGuests">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Age</th>
+                            <th>Major</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="guest in guests">
+                            <td>{{guest.name}}</td>
+                            <td>{{guest.type}}</td>
+                            <td>{{guest.age}}</td>
+                            <td>{{guest.major ? 'Yes' : 'Non'}}</td>
+                            <td>
+                                <button id="guestDelete" @click="confirmDeleteGuest(guest.id)" class="btn-small"><i class="material-icons right">delete</i>Delete</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p v-if="noGuests">No guests yet!</p>
+                </div>
+                <div class="row" id="guestEdit">
+                    <h3>Add a guest</h3>
+                    <form class="col s12" @submit.prevent="addGuest">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input v-model="name" ref="name" placeholder="John" id="name" type="text" class="validate">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input v-model="type" ref="type" placeholder="Male" id="type" type="text" class="validate">
+                                <label for="type">Type</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input v-model="age" ref="age" placeholder="18" id="age" type="number" class="validate">
+                                <label for="age">Age</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input v-model="major" ref="major" id="major" type="checkbox" class="filled-in">
+                                <label for="major">Major</label>
+                            </div>
+                        </div>
+                        <button id="guestEditSubmit" class="btn" type="submit"><i class="material-icons right">send</i>Submit</button>
+                    </form>
+                </div>
+                <div id="deleteConfirm" ref="deleteConfirm" class="modal">
+                    <div class="modal-content">
+                        <h4>Confirm delete</h4>
+                        <p>Delete ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button @click="deleteGuest(selectedGuestId)" class="modal-close btn-flat">Ok</button>
+                        <button class="modal-close btn-flat">Cancel</button>
+                    </div>
+                </div>
+            </div>
         </div>
+        <script src="js/main.js"></script>
     </body>
 </html>

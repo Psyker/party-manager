@@ -12,7 +12,7 @@ const init = async () => {
         // connect to the local database server
         await client.connect();
         // read the contents of the initdb.pgsql file
-        const sql = await fs.readFile( "./tools/initdb.pgsql", { encoding: "UTF-8" } );
+        const sql = await fs.readFile( "./src/tools/initdb.pgsql", { encoding: "UTF-8" } );
 
         // split the file into separate statements
         const statements = sql.split( /;\s*$/m );
@@ -23,15 +23,15 @@ const init = async () => {
             }
         }
     } catch (err) {
-        winston.log("error", err);
+        winston.log("error", err.message);
         throw err;
     } finally {
         await client.end();
     }
-
-    init().then( () => {
-        winston.log("info", "finished" );
-    } ).catch( () => {
-        winston.log("info", "finished with errors" );
-    } );
 };
+
+init().then( () => {
+    winston.log("info", "finished" );
+} ).catch( () => {
+    winston.log("info", "finished with errors" );
+} );

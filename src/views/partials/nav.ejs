@@ -1,6 +1,6 @@
 <nav>
     <div class="nav-wrapper">
-        <a href="/" class="brand-logo"><% if ( user ) { %><%= user.name %>'s <% } %>Guests List</a>
+        <a href="/" class="brand-logo"><% if ( user ) { %><%= user.nickname %>'s <% } %>Guests List</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/guests">My Guests</a></li>
             <% if ( isAuthenticated ) { %>
